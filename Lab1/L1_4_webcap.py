@@ -7,7 +7,7 @@ width = cap.get(cv.CAP_PROP_FRAME_WIDTH)   # float
 # Get current height of frame
 height = cap.get(cv.CAP_PROP_FRAME_HEIGHT) # float
 # Define Video Frame Rate in fps
-fps = 10.0
+fps = 15.0
 
 # Define the codec and create VideoWriter object
 fourcc = cv.VideoWriter_fourcc(*'XVID')

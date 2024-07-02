@@ -42,18 +42,43 @@
 			<h3>(A) Leitura de imagem em arquivo</h3>
 
 			<p>Ao executar o script "L1_1_img.py" é exebida a imagem em escala de cinza, e a para fechar a janela deve-se apertar o botão esc, a imagem está em escala de cinza por conta do parâmetro 0 na função cv.imshow()</p>
-
+			
 			<h3>(B) Leitura de vídeo em arquivo</h3>
 
 			<p>O programa "L1_2_video.py" abre uma janela e exibe frame a frame os dados armazenados no arquivo de video mp4, a velocidade de reprodução pode ser regulado pelo time,sleep. Assim ao aumentarmos esse tempo entre frames, o vídeo parecerá mais lento, e ao diminuir o tempo mais rápido vai parece que o vídeo está sendo executado</p>
 
 			<h3>(C) Leitura de imagem de câmera</h3>
 
-			<p>Executando o programa com a camera conectada a entrada USB, é possível transmitir os quadros captados pela camera para a janela aberta pelo programa</p>
+			<p>Executando o programa com a camera conectada a entrada USB, é possível transmitir os quadros captados pela camera para a janela aberta pelo programa.</p>
+			<p>Para que fosse possível salvar um screenshot quando fosse precionada a tecla "x" primeiro criamos uma nova variável chamda "k" em seguida foi atribuido a k esperar por uma entrada de dados, vinda do teclado, através do comando "cv.waitKey(1)". Dessa forma, assim que fosse selecionada uma entrada, seria verificado qual o valor da entrada e caso se enquadrasse em uma das opções tomaria uma ação:
+			<br>
+			<br>
+				x: salvar um screenshot do frame que estivesse sendo exibido no momento.
+			<br>
+			<br>
+				q: encerrar a execução.
+			<br>
+			<br>
+				Caso não se enquadrasse em nenhuma das opções, nenhuma ação seria tomada.
+			</p>
+
+			<p>Código alterado:</p>
+
+			<img src="prints/print-1-C.png">
 
 			<h3>(D) Gravação de vídeo da câmera</h3>
 
 			<p>Quando o programa sem alteração é executado, uma janela é aberta e os quadros são mostrados de ponta cabeça, até que o botão "q" seja pressionado, gravando todos os quadros desde o inicio da execução num arquivo avi</p>
+			<p>Para execução dessa atividade identificamos que a função flip estava sendo utilizada para o objeto frame, o que fazia com que os frames que fossem ser exibidos estivessem invertidos.
+				<br>
+				<br>
+				Comentando essa linha do código a imagem passava a ser exibida de maneira normal.
+			</p>
+			<p>Em relação a velocidade em que o arquivo estava sendo salvo, uma das variáveis que estava sendo setada no código, indicava qual a taxa de quadros (FPS) que o video seria salvo, dessa forma, alterando esse número poderiamos deixá-lo em uma velocidade normal. </p>
+
+			<p>Código da atividade D:</p>
+
+			<img src="prints/print-1-D.png">
 
 		<h2>Parte 2</h2>
 
@@ -103,11 +128,13 @@
 
 		<h2>Análise e Discussão</h2>
 
-			<p>Com a execução dos programas, junto a pesquisa das funções do opencv e seus parâmetros, foi possível compreender o uso de dados e ferramentas, tais como imagens, vídeos e webcam. Em particular, entender os efeitos da manipulação de captura de frames, influenciando na velocidade de reprodução do vídeo.</p>
+			<p>Com a execução dos programas, junto a pesquisa das funções do opencv e seus parâmetros, foi possível compreender o uso de dados e ferramentas, tais como imagens, vídeos e webcam. Em particular, entender os efeitos da manipulação de captura de frames, influenciando na velocidade de reprodução do vídeo. O aparelho que utilizamos para a captura das imagens influencia diretamenta nas possibilidades que temos de manipulação das imagens. Se tivermos um aparelho que tem uma taxa maior de captura de quadros, podemos realizar a criação de arquivos utilizando um fps mais alto, porém dependendo da taxa que temos de captura das imagens, mesmo que alterarmos esses valores durante a gravação do arquivo (conforme foi executado no item D da parte 1) teremos um vídeo com aparencia de mais "acelerado".</p>
 
 		<h2>Conclusões</h2>
 
 			<p>O Experimento nos permitiu ter uma visão dos conceitos básicos de captura de imagens e vídeos, e algumas das funcionalidades que a biblioteca opencv, nos traz para realização de tarefas que envolvem esse tipo de dado. </p>
+			<p>Foi experimentado que é possível fazermos alterações tanto no momento de criarmos um arquivo de filmagem como a partir de um arquivo ja existente utilizando as funções da biblioteca do opencv.</p>
+			<p>A possibilidade de utilizar um programa que é executado através de uma biblioteca python, abre uma gama de possibilidades de aplicações pois é uma linguagem versátil e de alto nível, fazendo com que seja possível experimentarmos diferentes maneiras de resolvermos o mesmo problema, chegando no mesmo objetivo por meio de caminhos diferentes. Inclusive essa versatilidade foi utilizada para realização dos itens da parte 2 do experimento. As imagens utlizadas foram geradas em sala com auxílio (realizando algumas adaptações) dos programas disponibilizados na parte 1.</p>
 
 		<h2>Referências</h2>
 
