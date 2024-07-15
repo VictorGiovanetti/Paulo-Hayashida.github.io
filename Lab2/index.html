@@ -42,23 +42,44 @@
 		
 				<p>Link 1: https://learnopencv.com/geometry-of-image-formation/</p>
 
-				<p>
-Para transformar objetos capturados por uma câmera em imagens 2D, é necessário converter as coordenadas desses objetos para as coordenadas dos pixels correspondentes na imagem. Para isso, utilizam-se três sistemas de coordenadas. O primeiro sistema de coordenadas é o sistema de coordenadas do mundo, que indica a posição dos objetos e da câmera no espaço tridimensional. O segundo sistema é o sistema de coordenadas da câmera, que referencia a translação e rotação do objeto em relação à câmera. O terceiro sistema faz a projeção do objeto e leva em consideração as propriedades das lentes, corrigindo as distorções naturais.</p>
+				<p>Para transformar objetos capturados por uma câmera em imagens 2D, é necessário converter as coordenadas desses objetos para as coordenadas dos pixels correspondentes na imagem. Para isso, utilizam-se três sistemas de coordenadas. O primeiro sistema de coordenadas é o sistema de coordenadas do mundo, que indica a posição dos objetos e da câmera no espaço tridimensional. O segundo sistema é o sistema de coordenadas da câmera, que referencia a translação e rotação do objeto em relação à câmera. O terceiro sistema faz a projeção do objeto e leva em consideração as propriedades das lentes, corrigindo as distorções naturais.</p>
+				<p>Assim, supondo que a câmera esteja em uma posição arbitrária, representada por um vetor de translação 3x1,t, e uma orientação arbitrária, representada por uma matriz de rotação 3x3, R. Ao combinar essas matrizes em uma única matriz 3x4, chamada de matriz extrínseca [R∣t], podemos transformar as coordenadas dos objetos do espaço 3D para o sistema de coordenadas da câmera</p>
+				<p>Para uma câmera pinhole, a imagem projetada é invertida em 180º no plano da imagem. No entanto, por conveniência, assumimos que a imagem está projetada na frente do centro óptico. Utilizando geometria básica, a projeção da imagem é dada por x = f*Xc/Zc e y = f*Yc/Zc, onde f é o ponto focal da câmera, Xc, Yc e Zc são as coordenadas no espaço da câmera, e x e y as coordenadas projetadas. Reescrevendo isso em forma matricial, obtemos a matriz intrínseca, que inclui os parâmetros intrínsecos da câmera.</p>
 
 				<p>Link 2: https://learnopencv.com/camera-calibration-using-opencv/</p>
 
+				<p>A calibração da câmera é o processo de estimar os parâmetros de uma câmera. Isso envolve obter todas as informações necessárias (parâmetros ou coeficientes) sobre a câmera para determinar a relação precisa entre um ponto 3D no mundo real e sua projeção 2D na imagem capturada por essa câmera. Geralmente, isso significa recuperar dois tipos de parâmetros: os parâmetros internos do sistema câmera/lente, como a distância focal, o centro óptico e os coeficientes de distorção radial da lente; e os parâmetros externos, que se referem à orientação (rotação e translação) da câmera em relação a algum sistema de coordenadas do mundo.</p>
+				<p>O objetivo do processo de calibração é encontrar os valores dos parâmetros intrínsecos e extrínsecos. Sendo elas matriz intrínseca 3×3 𝐾, a matriz de rotação 3×3 R e o vetor de translação 3×1 t. Usando um conjunto de pontos 3D conhecidos  e suas coordenadas de imagem correspondentes. A calibração pode ser feita de diferentes formas, tais como padrão de calibração, quando se tem algum padrão como xadrez ou padrões circulares com tamanhos conhecidos; pistas geométricas, por meio de linhas retas e pontos de fuga; e baseada em Deep Learning.</p>
+				<p>O processo de calibração da câmera começa com a definição das coordenadas do mundo real usando um padrão de tabuleiro de xadrez com dimensões conhecidas. Esse padrão é fotografado de diferentes orientações para capturar os cantos dos quadrados, que são usados para definir um sistema de coordenadas do mundo onde todos os pontos estão no plano XY com Z = 0. O padrão de tabuleiro de xadrez é amplamente utilizado devido à sua facilidade de detecção e à clareza dos gradientes nos cantos dos quadrados. Em seguida, é necessário localizar os cantos dos quadrados usando a função cv2.findChessboardCorners(). Para melhorar a precisão, pode-se utilizar a função cv2.cornerSubPix(). Por fim, a função cv2.calibrateCamera() utiliza os parâmetros obtidos nos passos anteriores para calibrar a câmera.
+
+</p>
+
 				<p>Link 3: https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html</p>
+
+				<p></p>
 
 			<h2>Parte 2</h2>
 
+				<p>Nessa etapa faremos a calicação da câmera baseado no "Link 2" e utilizando o arquivo L2_cal.py</p>
+				<p>Para isso é necessário que tenhamos conhecimento dos parametros utilizados pela câmera, para que possamos transformar as imagens de 3D para os pixels em 2D.</p>
+				<p>Esses parametros são divididos em duas partes, internos e externos.</p>
 
 				<h3>a) </h3>
 
+				<p>Para resolução do item acima foi necessário apontar a variavel img para os arquivos de amostras.</p>
+		
 
+		
 				<h3>b) </h3>
 
+				<p>Caminho dos arquivos da parte 2: ./grupo-samples/</p>
+				<p></p>Arquivo alterado para execução do item B, utilizando a nossa imagem do tabuleiro.</p>
+
+				
 
 				<h3>c) </h3>
+
+				<p>Para esta etapa foram utilizadas imagens capturadas pela câmera do celular com uma resolução bem maior do que a utilizada anteriormente.</p>
 
 
 			
