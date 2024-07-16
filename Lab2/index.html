@@ -30,7 +30,7 @@
 			<p>Victor Giovanetti Monteiro RA: 11201722116</p>
 
 			<p>Data de realização do experimento: 02/07/24</p>
-			<p>Data de Publicação: */07/24</p>
+			<p>Data de Publicação: 16/07/24</p>
 
 			<h2>Introdução</h2>
 
@@ -49,24 +49,120 @@
 				<p>Link 2: https://learnopencv.com/camera-calibration-using-opencv/</p>
 
 				<p>A calibração da câmera é o processo de estimar os parâmetros de uma câmera. Isso envolve obter todas as informações necessárias (parâmetros ou coeficientes) sobre a câmera para determinar a relação precisa entre um ponto 3D no mundo real e sua projeção 2D na imagem capturada por essa câmera. Geralmente, isso significa recuperar dois tipos de parâmetros: os parâmetros internos do sistema câmera/lente, como a distância focal, o centro óptico e os coeficientes de distorção radial da lente; e os parâmetros externos, que se referem à orientação (rotação e translação) da câmera em relação a algum sistema de coordenadas do mundo.</p>
-				<p>O objetivo do processo de calibração é encontrar os valores dos parâmetros intrínsecos e extrínsecos. Sendo elas matriz intrínseca 3×3 𝐾, a matriz de rotação 3×3 R e o vetor de translação 3×1 t. Usando um conjunto de pontos 3D conhecidos  e suas coordenadas de imagem correspondentes. A calibração pode ser feita de diferentes formas, tais como padrão de calibração, quando se tem algum padrão como xadrez ou padrões circulares com tamanhos conhecidos; pistas geométricas, por meio de linhas retas e pontos de fuga; e baseada em Deep Learning.</p>
+				<p>O objetivo do processo de calibração é encontrar os valores dos parâmetros intrínsecos e extrínsecos. Sendo elas matriz intrínsica 3×3 𝐾, a matriz de rotação 3×3 R e o vetor de translação 3×1 t. Usando um conjunto de pontos 3D conhecidos  e suas coordenadas de imagem correspondentes. A calibração pode ser feita de diferentes formas, tais como padrão de calibração, quando se tem algum padrão como xadrez ou padrões circulares com tamanhos conhecidos; pistas geométricas, por meio de linhas retas e pontos de fuga; e baseada em Deep Learning.</p>
 				<p>O processo de calibração da câmera começa com a definição das coordenadas do mundo real usando um padrão de tabuleiro de xadrez com dimensões conhecidas. Esse padrão é fotografado de diferentes orientações para capturar os cantos dos quadrados, que são usados para definir um sistema de coordenadas do mundo onde todos os pontos estão no plano XY com Z = 0. O padrão de tabuleiro de xadrez é amplamente utilizado devido à sua facilidade de detecção e à clareza dos gradientes nos cantos dos quadrados. Em seguida, é necessário localizar os cantos dos quadrados usando a função cv2.findChessboardCorners(). Para melhorar a precisão, pode-se utilizar a função cv2.cornerSubPix(). Por fim, a função cv2.calibrateCamera() utiliza os parâmetros obtidos nos passos anteriores para calibrar a câmera.
 
 </p>
 
 				<p>Link 3: https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html</p>
 
-				<p></p>
+				<p>O terceiro link apresenta um problema que pode ocorrer quando o equipamento não está parametrizado, dessa forma a distorção radial apresenta deformações na imagem, dando a impressão de que as linhas retas na verdade são curvas.</p>
+				<p>Também é apresentado um método de parametrização que faz uso de algumas imagens de amostra, com um padrão de figura bem definido e pontos com distâncias entre si que são conhecidas, assim conhecemos as coordenadas desses pontos no mundo real podemos encontrar os parametros da câmera.</p>
 
 			<h2>Parte 2</h2>
 
 				<p>Nessa etapa faremos a calicação da câmera baseado no "Link 2" e utilizando o arquivo L2_cal.py</p>
-				<p>Para isso é necessário que tenhamos conhecimento dos parametros utilizados pela câmera, para que possamos transformar as imagens de 3D para os pixels em 2D.</p>
 				<p>Esses parametros são divididos em duas partes, internos e externos.</p>
+				<p>Os parametros intrinsicos estão diretamente relacionados ao equipamento de captura, como a distância focal ou o centro óptico da câmera.</p>
+				<p>Os parametros extrinsicos ou externos são definidos levando em consideração o sistema de coordenadas do mundo real que foi adotado e utilizando as matrizes de rotação e translação. </p>
+
+				<p>Utilizando as funções do opencv é possível que o código identifique o padrão observado no tabuleiro de xadrez e com a função cv.calibrateCamera() recebemos os valores dos parametros da câmera.</p>
 
 				<h3>a) </h3>
 
 				<p>Para resolução do item acima foi necessário apontar a variavel img para os arquivos de amostras.</p>
+
+				<p>Camera matrix : </p>
+
+					<p>[[536.07343567   0.         342.37038373]
+					 [  0.         536.01635124 235.53685496]
+					 [  0.           0.           1.        ]]</p>
+					
+					
+					 <p>dist : </p>
+					
+					<p>[[-0.26509012 -0.04674346  0.00183301 -0.00031472  0.25231495]]</p>
+					
+					<p>(array([[-0.3746336 ],
+						   [ 0.06982835],
+						   [-0.01937108]]),<br>
+						array([[ 0.05280146],
+						   [-0.60171821],
+						   [-0.18453822]]),<br>
+						array([[-0.34698248],
+						   [-0.06738503],
+						   [-1.20088995]]),<br>
+						array([[ 0.1972109 ],
+						   [-0.42009945],
+						   [-0.1949708 ]]),<br>
+						array([[ 0.4828725 ],
+						   [-0.17036999],
+						   [-1.40740334]]),<br>
+						array([[-0.10141611],
+						   [ 0.32034835],
+						   [ 0.3147293 ]]),<br>
+						array([[-0.08398745],
+						   [ 0.34802803],
+						   [-1.54244125]]),<br>
+						array([[-0.22584694],
+						   [ 1.0155114 ],
+						   [-2.79470629]]),<br>
+						array([[-0.47359527],
+						   [ 0.08970849],
+						   [-0.22605977]]),<br>
+						array([[-0.35339069],
+						   [ 0.24071879],
+						   [ 0.20970029]]),<br>
+						array([[ 0.49542331],
+						   [ 0.11948824],
+						   [-0.29675962]]),<br>
+						array([[0.06525918],
+						   [0.44701849],
+						   [0.10800011]]),<br>
+						array([[-0.27527337],
+						   [ 0.10123358],
+						   [-1.56296566]]))</p>
+					<p>tvecs : 
+					
+					<p>(array([[-2.95848507],
+						   [-3.94417917],
+						   [13.21423801]]),<br>
+					array([[-2.16838614],
+						   [-3.50011104],
+						   [10.73694876]]),<br>
+					array([[-3.42743405],
+						   [ 0.48738235],
+						   [11.56153534]]),<br>
+					array([[-2.67642764],
+						   [-3.18945558],
+						   [10.58262296]]),<br>
+					array([[-3.50264504],
+						   [ 1.6159546 ],
+						   [11.97222434]]),<br>
+					array([[-3.72585127],
+						   [-4.31084787],
+						   [17.2043959 ]]),<br>
+					array([[-2.96218139],
+						   [ 0.57159003],
+						   [16.83013784]]),<br>
+					array([[ 2.53399669],
+						   [ 4.3199921 ],
+						   [13.71918905]]),<br>
+					array([[-2.5179161 ],
+						   [-3.4306905 ],
+						   [12.85702176]]),<br>
+					array([[-1.59003858],
+						   [-4.31771177],
+						   [14.01040699]]),<br>
+					array([[-3.40557301],
+						   [-2.4104226 ],
+						   [12.58706846]]),<br>
+					array([[ 2.207421  ],
+						   [-3.21446546],
+						   [15.60125332]]),<br>
+					array([[-3.99387882],
+						   [ 2.27704401],
+						   [12.68878148]]))</p>
 		
 
 		
@@ -75,6 +171,78 @@
 				<p>Caminho dos arquivos da parte 2: ./grupo-samples/</p>
 				<p></p>Arquivo alterado para execução do item B, utilizando a nossa imagem do tabuleiro.</p>
 
+				<p>Camera matrix : </p>
+
+				<p>[[691.29939128   0.         326.80276268]
+					[  0.         692.13240307 219.64457563]
+					[  0.           0.           1.        ]]</p>
+				<p>	dist : </p>
+
+					<p>[[ 1.21164755e-01 -1.80341820e+00  1.64363312e-04 -7.60266984e-03
+					9.12197319e+00]]</p>
+					<p>rvecs : </p>
+
+					<p>(array([[ 0.34030661],
+						[-0.64395203],
+						[ 1.45726228]]), <br>array([[ 0.66439822],
+						[-0.82912519],
+						[-1.08610413]]), <br>array([[ 0.64222347],
+						[-0.6413235 ],
+						[ 1.46444406]]), <br>array([[-0.1302544 ],
+						[ 0.10646706],
+						[-1.0387285 ]]), <br>array([[-0.82851336],
+						[ 0.6535799 ],
+						[ 1.36696742]]), <br>array([[-0.90199068],
+						[ 0.24249242],
+						[ 1.32461194]]), <br>array([[-0.51136924],
+						[-0.06175017],
+						[-0.23997589]]), <br>array([[-0.11743436],
+						[ 0.21082132],
+						[ 1.50923599]]), <br>array([[-0.73333152],
+						[-0.41849031],
+						[-0.63287277]]), <br>array([[-0.15481039],
+						[-0.59235345],
+						[ 1.29567114]]), <br>array([[ 0.26000572],
+						[-0.20826415],
+						[ 0.06725556]]), <br>array([[-0.68644636],
+						[ 0.32961181],
+						[ 1.4217883 ]]), <br>array([[ 0.01649892],
+						[-0.14198133],
+						[ 1.57474915]]), <br>array([[ 0.05190661],
+						[-0.69807807],
+						[ 0.82150603]]))
+					<p>tvecs :</p> 
+
+					<p>(array([[ 3.04307359],
+						[-1.22388435],
+						[16.05929538]]), <br>array([[-3.02659696],
+						[ 2.23760102],
+						[12.44878562]]), <br>array([[ 3.50754501],
+						[-1.62849374],
+						[13.4914934 ]]), <br>array([[-4.48606727],
+						[-0.22691993],
+						[18.24453401]]), <br>array([[ 3.2408679 ],
+						[-2.20850987],
+						[16.48658753]]), <br>array([[ 2.05913497],
+						[-1.41699544],
+						[18.89359878]]), <br>array([[-1.85223215],
+						[-2.10454171],
+						[18.48411152]]), <br>array([[ 3.67876371],
+						[-2.25851861],
+						[14.73231102]]), <br>array([[-3.79184025],
+						[-2.11379481],
+						[16.44896473]]), <br>array([[ 1.92157795],
+						[-2.84557839],
+						[18.17655542]]), <br>array([[-2.18481237],
+						[-2.24779745],
+						[16.76734773]]), <br>array([[ 2.65321446],
+						[-3.36055116],
+						[18.25509596]]), <br>array([[ 2.78757729],
+						[-2.13258889],
+						[16.36612542]]), <br>array([[ 1.27114255],
+						[-3.7317837 ],
+						[18.5421511 ]]))</p>
+
 				
 
 				<h3>c) </h3>
@@ -82,6 +250,72 @@
 				<p>Para esta etapa foram utilizadas imagens capturadas pela câmera do celular com uma resolução bem maior do que a utilizada anteriormente.</p>
 
 
+				<p>Camera matrix : </p>
+
+					<p>[[690.57939917   0.         459.70860971]
+					[  0.         689.18030163 422.86297081]
+					[  0.           0.           1.        ]]</p>
+					<p>dist :</p> 
+
+					<p>[[-0.19201434  0.36787535 -0.01442795  0.00406974 -0.49560428]]</p>
+					<p>rvecs :</p> 
+
+					<p>(array([[-0.26376473],
+						[ 0.24299112],
+						[-1.21089966]]), <br>array([[-0.58171941],
+						[-0.45530289],
+						[-1.38013168]]), <br>array([[ 0.15662042],
+						[-0.02658416],
+						[ 1.58554542]]), <br>array([[-0.16304176],
+						[-0.11128085],
+						[ 0.54745919]]), <br>array([[ 0.37858058],
+						[-0.29571776],
+						[-1.01696836]]), <br>array([[-0.59293558],
+						[ 0.0329549 ],
+						[ 0.52883148]]), <br>array([[-1.04437208],
+						[-0.38558207],
+						[-0.80975221]]), <br>array([[-0.5780895 ],
+						[-0.09542955],
+						[-0.69297084]]), <br>array([[-0.5892605 ],
+						[-0.21640485],
+						[ 1.39271697]]), <br>array([[-0.28140131],
+						[ 0.43286906],
+						[-0.09606854]]), <br>array([[ 0.59169014],
+						[-0.92852142],
+						[ 0.08089715]]), <br>array([[-0.15918898],
+						[ 0.0091384 ],
+						[ 0.01369549]]), <br>array([[-0.23854841],
+						[-0.18296492],
+						[ 1.44317065]]))
+					<p>tvecs : </p>
+
+					<p>(array([[-3.26034657],
+						[ 0.2235424 ],
+						[11.34624057]]), <br>array([[-3.33036217],
+						[ 0.48757511],
+						[ 7.85922378]]), <br>array([[ 3.62255746],
+						[-3.58924109],
+						[ 8.6545276 ]]), <br>array([[-0.98219389],
+						[-3.44440619],
+						[11.14335641]]), <br>array([[-4.65145051],
+						[-0.42435246],
+						[11.58432783]]), <br>array([[-1.0077882 ],
+						[-3.88586167],
+						[14.83635978]]), <br>array([[-6.28329829],
+						[ 0.30773385],
+						[11.65832076]]), <br>array([[-3.62865469],
+						[-2.43498695],
+						[11.91371477]]), <br>array([[ 2.16386303],
+						[-4.98976656],
+						[14.613801  ]]), <br>array([[-2.79608728],
+						[-2.63015994],
+						[12.60429919]]), <br>array([[-1.7470227 ],
+						[-1.19984893],
+						[ 5.95174709]]), <br>array([[-3.19742441],
+						[-3.6128068 ],
+						[11.51175185]]), <br>array([[ 1.92771389],
+						[-1.93490582],
+						[13.56333082]]))</p>
 			
 
 
@@ -89,11 +323,36 @@
 
 			<h2>Análise e Discussão</h2>
 
+						<p>O opencv tem muitas funções que auxiliam na hora de determinarmos os parametros das câmeras e equipamento de captura, com isso não é necessário que sejam criados códigos para executar os cálculos ou mesmo identificar os padrões do tabuleiro de xadrez pois existem funções próprias já desenhadas para isso.
+							<br>
+						
+						É possível utilizar outras imagens para a calibração do equipamento, porém devem seguir os requisitos de conterem padrões conhecidos de imagem e coordenadas definidas no mundo real.
+						</p>
+						<p>p>A definição da câmera implica diretamente nos parametros encontrados, visto que mesmo utilizando o mesmo tabuleiro como amostra para calibragem, os parametros gerados nas partes 2 e 3 tiveram grande diferença nos valores.
+						</p>
+						<p>Para execução dos passos B e C da parte 2, alteramos um parametros importante no código, CHECKERBOARD = (6,8), esse parametro defini o tipo de padrão e dimensão do nosso tabuleiro para que as coordenadas coincidam com os cantos das casas.</p>
 
 			<h2>Conclusões</h2>
 
+						<p>Antes de executarmos capturas de imagens com as câmeras, devemos realizar o processo de calibração do equipamento para evitar erros e distorções nas imagens. Esse processo implica não só em imagens mais nítidas como também mais confiáveis para execução de diversos projetos que podem ser feitos utilizando o opencv e visão computacional.<br>
+						Uma imagem retirada sem a calibração adequada pode conter deformações que vão inviabilizar a utilização dela para determinados fins.<br>
+						Essa calibração pode ser feita em poucas linhas de código com a ajuda da briblioteca opencv e suas funções.
+						</p>
+						
 			
 			<h2>Referências</h2>
+
+				<p>		  [1] Geometria da formação de imagens:
+						https://learnopencv.com/geometry-of-image-formation/<br>
+						 [2] Calibração de Camera com OpenCV:
+						https://learnopencv.com/camera-calibration-using-opencv/ <br>
+						 [3] Camera Calibration. Atenção à parte de Distorção Radial da Lentes:
+						https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html <br>
+						 [4] Camera Calibration Toolbox for Matlab:
+						http://robots.stanford.edu/cs223b04/JeanYvesCalib/ <br>
+						 [5] Pinhole camera model:
+						https://en.wikipedia.org/wiki/Pinhole_camera_model <br>
+				</p>
 
 
 	</body>
